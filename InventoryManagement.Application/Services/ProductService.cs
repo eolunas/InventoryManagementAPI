@@ -7,10 +7,12 @@ namespace InventoryManagement.Application.Services
     public class ProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IInventoryMovementRepository _movementRepository;
 
-        public ProductService(IProductRepository productRepository)
+        public ProductService(IProductRepository productRepository, IInventoryMovementRepository movementRepository)
         {
             _productRepository = productRepository;
+            _movementRepository = movementRepository;
         }
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
@@ -21,6 +23,19 @@ namespace InventoryManagement.Application.Services
         public async Task<Product?> GetProductByIdAsync(int id)
         {
             return await _productRepository.GetByIdAsync(id);
+        }
+
+        public async Task RegisterMovementAsync(ProductMovementDto movementDto, string userId)
+        {
+            var movement = new InventoryMovement
+            {
+                ProductId = movementDto.ProductId,
+                Quantity = movementDto.Quantity,
+                Type = movementDto.Quantity > 0 ? "IN" : "OUT",
+                UserId = userId
+            };
+
+            await _movementRepository.AddAsync(movement);
         }
 
         public async Task AddProductAsync(ProductDto productDto)
