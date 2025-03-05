@@ -41,5 +41,10 @@ namespace InventoryManagement.Infrastructure.Repositories
                 throw;
             }
         }
+
+        public async Task<bool> HasMovementsAsync(int productId)
+        {
+            return await _dbContext.InventoryMovements.AnyAsync(m => m.ProductId == productId);
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace InventoryManagement.Domain.Interfaces
     {
         Task<IEnumerable<InventoryMovement>> GetAllAsync();
         Task AddAsync(InventoryMovement movement);
+        Task<bool> HasMovementsAsync(int productId);
     }
 }

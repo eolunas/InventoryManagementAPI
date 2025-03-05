@@ -92,6 +92,7 @@ dotnet run --project InventoryManagement.API
 Visit:
 ```
 http://localhost:5000/swagger
+https://localhost:7132/swagger
 ```
 Here you can test endpoints and authenticate via JWT.
 

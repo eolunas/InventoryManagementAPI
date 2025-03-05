@@ -9,5 +9,6 @@ namespace InventoryManagement.Domain.Interfaces
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(int id);
+        Task<Product?> GetByNameAsync(string name);
     }
 }

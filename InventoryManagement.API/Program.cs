@@ -1,4 +1,5 @@
 using InventoryManagement.API.Auth;
+using InventoryManagement.API.Middleware;
 using InventoryManagement.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -62,8 +63,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseSwaggerDocumentation();
+// Apply global error handling middleware
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
+app.UseSwaggerDocumentation();
 app.UseAuthentication(); // Enable authentication
 app.UseAuthorization();
 
