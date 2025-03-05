@@ -1,10 +1,11 @@
 ﻿using InventoryManagement.Application.DTOs;
+using InventoryManagement.Application.Interfaces;
 using InventoryManagement.Domain.Entities;
 using InventoryManagement.Domain.Interfaces;
 
 namespace InventoryManagement.Application.Services
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
         private readonly IInventoryMovementRepository _movementRepository;

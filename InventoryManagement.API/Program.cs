@@ -27,6 +27,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddApplicationServices(); // Dependencies
+builder.Services.AddSwaggerDocumentation(); // Swagger config
+
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddControllers();
@@ -36,11 +39,21 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Apply Migrations at Startup
+// Apply Migrations at Startup and execute SeedData:
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
-    dbContext.Database.Migrate();
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<InventoryDbContext>();
+
+    try
+    {
+        dbContext.Database.Migrate(); // Apply migrations
+        SeedData.InitializeAsync(services).Wait(); // Execute SeedData
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Database migration failed: {ex.Message}");
+    }
 }
 
 if (app.Environment.IsDevelopment())
@@ -48,6 +61,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSwaggerDocumentation();
 
 app.UseAuthentication(); // Enable authentication
 app.UseAuthorization();
