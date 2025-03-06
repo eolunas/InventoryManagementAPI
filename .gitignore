@@ -271,6 +271,15 @@ __pycache__/
 # Important configuration
 appsettings.json
 
+# Backend (dotnet)
+backend/bin/
+backend/obj/
+
+# Frontend (Angular)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
 # Cake - Uncomment if you are using it
 # tools/
 
