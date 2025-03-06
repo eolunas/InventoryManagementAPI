@@ -1,0 +1,30 @@
+<div *ngIf="isOpen" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+    <h2 class="text-xl font-bold mb-4">{{ isEdit ? 'Edit Product' : 'New Product' }}</h2>
+
+    <form (ngSubmit)="saveProduct()">
+      <!-- Name -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Product Name</label>
+        <input [(ngModel)]="product.name" name="name" required class="w-full px-3 py-2 border rounded">
+      </div>
+
+      <!-- Quantity -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Quantity</label>
+        <input [(ngModel)]="product.quantity" name="quantity" type="number" required class="w-full px-3 py-2 border rounded">
+      </div>
+
+      <!-- Mensaje de éxito o error -->
+      <p *ngIf="message" class="text-center mt-2" [ngClass]="messageType === 'error' ? 'text-red-500' : 'text-green-500'">
+        {{ message }}
+      </p>
+
+      <!-- Buttons -->
+      <div class="flex justify-end space-x-2">
+        <button type="button" (click)="closeModal()" class="px-4 py-2 bg-gray-400 text-white rounded">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">{{ isEdit ? 'Update' : 'Create' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

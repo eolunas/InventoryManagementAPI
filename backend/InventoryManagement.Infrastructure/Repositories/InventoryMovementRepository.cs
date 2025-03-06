@@ -19,6 +19,11 @@ namespace InventoryManagement.Infrastructure.Repositories
             return await _dbContext.InventoryMovements.Include(m => m.Product).ToListAsync();
         }
 
+        public IQueryable<InventoryMovement> GetAll()
+        {
+            return _dbContext.InventoryMovements.Include(m => m.Product).AsQueryable();
+        }
+
         public async Task AddAsync(InventoryMovement movement)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();

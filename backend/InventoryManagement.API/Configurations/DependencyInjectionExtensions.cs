@@ -10,6 +10,7 @@ public static class DependencyInjectionExtensions
 
         // Aplication services:
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IInventoryMovementService, InventoryMovementService>();
 
         // Infraestructure repositories:
         services.AddScoped<IProductRepository, ProductRepository>();

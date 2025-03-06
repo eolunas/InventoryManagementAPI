@@ -1,6 +1,19 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-100">
+
   <div class="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
     <h2 class="text-2xl font-bold text-gray-700 mb-4">Product Inventory</h2>
+
+    <a routerLink="/inventory/movement"
+      class="block text-center bg-green-500 text-white p-2 rounded mt-4 hover:bg-green-600">
+    Register Movement
+    </a>
+    <a routerLink="/inventory/history"
+      class="block text-center bg-blue-500 text-white p-2 rounded mt-4 hover:bg-blue-600">
+      View History
+    </a>
+
+
+    <button (click)="openModal(false)" class="mb-4 px-4 py-2 bg-green-500 text-white rounded">New Product</button>
 
     <table class="w-full border-collapse border border-gray-200">
       <thead>
@@ -8,6 +21,7 @@
           <th class="border border-gray-300 px-4 py-2">ID</th>
           <th class="border border-gray-300 px-4 py-2">Name</th>
           <th class="border border-gray-300 px-4 py-2">Quantity</th>
+          <th class="border border-gray-300 px-4 py-2">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -16,10 +30,23 @@
             <td class="border border-gray-300 px-4 py-2">{{ product?.id }}</td>
             <td class="border border-gray-300 px-4 py-2">{{ product?.name }}</td>
             <td class="border border-gray-300 px-4 py-2">{{ product?.quantity }}</td>
+            <td class="border border-gray-300 px-4 py-2">
+              <button (click)="openModal(true, product)" class="px-2 py-1 bg-yellow-500 text-white rounded">Edit</button>
+              <button (click)="deleteProduct(product.id)" class="ml-2 px-2 py-1 bg-red-500 text-white rounded">Delete</button>
+            </td>
           </tr>
         </ng-container>
       </tbody>
     </table>
+
+    <!-- Modal -->
+    <app-product-form
+      [isOpen]="isModalOpen"
+      [isEdit]="isEditing"
+      [product]="selectedProduct"
+      (close)="isModalOpen = false"
+      (refreshList)="loadInventory()">
+    </app-product-form>
 
     <ng-template #noProducts>
       <p class="text-gray-500 mt-2 text-center">No products available</p>
