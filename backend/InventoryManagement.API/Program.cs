@@ -30,6 +30,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddApplicationServices(); // Dependencies
 builder.Services.AddSwaggerDocumentation(); // Swagger config
+builder.Services.AddCorsPolicies(); // CORS Policities
 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtService>();
@@ -66,6 +67,8 @@ if (app.Environment.IsDevelopment())
 // Apply global error handling middleware
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
+
+app.UseCorsPolicies();    // CORS Policities
 app.UseSwaggerDocumentation();
 app.UseAuthentication(); // Enable authentication
 app.UseAuthorization();
